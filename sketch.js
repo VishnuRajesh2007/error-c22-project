@@ -12,14 +12,14 @@ var boxes = [];
  
 var ground;
 var gSlider;
- 
 function setup() {
     createCanvas(400, 400);
 
     // Create an instance of Engine, World
     engine = Engine.create();
     world = engine.world;
- 
+    Engine.run(engine);
+
     // A slider is already created for you here. This slider will dictate the gravity of the world
     gSlider = createSlider(0, 100, 50);
     gSlider.position(40, 365);
@@ -30,26 +30,30 @@ function setup() {
     //ground.shapeColor("blue");
    
 }
- 
+
 function mousePressed() {
     if (mouseY < 350) {
+        boxes.push(new Box,mouseX,mouseY,50,50);
+    
+       }
         // Every time a mouse press occures create a new box.
-       boxes.push(new Box(mouseX,mouseY,10,10,))
+      
     }
-}
+
  
 function draw() {
     // Draw all the elements including the slider that 
     background(51);
     ground.display();
-    mousePressed();
-    boxes[0].display();
-    Engine.update(engine);
+    for(var i=0;i<boxes.length;i++){
+    boxes[i].show();
+}
+   
     // This is the value of your gravity. You can optionally show it to the viewer.
     var fVal = gSlider.value();
  
     // Use a for loop to show all the boxes
-
+   
 }
  
 
@@ -67,20 +71,23 @@ function Box(x, y, w, h, options) {
     this.body = Bodies.rectangle(x, y, width, height, options);
     this.width = w;
     this.height = h;
+    World.add(world, this.body);
     // create your box using the function arguments
     // x - x-coordinate
     // y - y-coordinate
     // w - width of the box
     // h - height of the box
-    var position =this.body.position;
-    rectMode(CENTER);
-    fill(255);
-    rect(position.x, position.y, this.width, this.height);
-    pop();
- 
+    
    
     // Create a show method which will draw the box every time it is called inside the draw method.
     // remember to push and pop.
     this.show = function  () {
+    var position =this.body.position;
+    push();
+    rectMode(CENTER);
+    fill(255);
+    rect(0, 0, this.width, this.height);
+    pop();
+ 
     }
 }
